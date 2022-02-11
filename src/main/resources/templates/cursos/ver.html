@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+
+<head th:replace="layout/layout :: head"></head>
+
+<body>
+    <header th:replace="layout/layout ::header"></header>
+
+    <div class="container">
+        <div class="card shadow-lg my-4">
+            <div class="card-header">
+                <a class="btn badge-danger" th:href="@{/}">Regresar</a>
+                <h1 class="text-dark text-center border border-dark border-top-0 border-left-0 border-right-0"
+                    th:text="${titulo}"></h1>
+            </div>
+            <div class="card-body">
+                <div style="display: flex; justify-content: space-around;">
+                    <div class="alert alert-success">
+                        <strong>Porcentaje de alumnos aprobados: </strong>
+                        <p th:text="${curso.aprobados+'%'}"></p>
+                    </div>
+                    <div class="alert alert-danger">
+                        <strong>Porcentaje de alumnos reproabdos: </strong>
+                        <p th:text="${curso.reprobados+'%'}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-sm-8">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-header">
+                        <center>
+                            <h3>Datos del curso</h3>
+                        </center>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item" th:text="${'ID '+curso.id}"></li>
+                            <li class="list-group-item" th:text="${curso.nombre}"></li>
+                            <li class="list-group-item" th:text="${'Horas a la semana: '+curso.horasSemana+' horas'}">
+                            </li>
+                            <li class="list-group-item" th:text="${'Dias a la semana: '+curso.diasSemana+' dias'}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card shadow-lg ">
+                    <div class="card-header">
+                        <center>
+                            <h3>Alumnos de la clase</h3>
+                        </center>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Cal-1</th>
+                                <th>Cal-2</th>
+                                <th>Cal-3</th>
+                                <th>Cal-F</th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="calificacion : ${curso.calificaciones}">
+                                    <td>
+                                        <img class="card-img-top img-thumbnail rounded-circle shadow-lg"
+                                            th:src="@{${calificacion.estudiante.foto}}" alt="">
+                                    </td>
+                                    <td th:text="${calificacion.estudiante}"></td>
+                                    <td th:classappend="${calificacion.calificacion1>=6 ? 'text-success' : 'text-danger'}"
+                                        th:text="${calificacion.calificacion1}"></td>
+                                    <td th:classappend="${calificacion.calificacion2>=6 ? 'text-success' : 'text-danger'}"
+                                        th:text="${calificacion.calificacion2}"></td>
+                                    <td th:classappend="${calificacion.calificacion3>=6 ? 'text-success' : 'text-danger'}"
+                                        th:text="${calificacion.calificacion3}"></td>
+                                    <td th:classappend="${calificacion.promedio>=6 ? 'text-success' : 'text-danger'}">
+                                        <strong th:text="${calificacion.promedio}"></strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card shadow-lg">
+                    <div class="card-header">
+                        <center>
+                            <h3>Datos del profesor</h3>
+                        </center>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-dark">
+                                <img class="card-img-top img-thumbnail rounded-circle shadow-lg"
+                                    th:src="@{${curso.profesor.foto}}" alt="">
+                            </li>
+                            <li class="list-group-item" th:text="${'ID '+curso.profesor.id}"></li>
+                            <li class="list-group-item" th:text="${curso.profesor}"></li>
+                            <li class="list-group-item"
+                                th:text="${#calendars.format(curso.profesor.fechaNacimiento,'dd/MM/yyyy')}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>
