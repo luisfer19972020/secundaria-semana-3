@@ -21,16 +21,19 @@ public class CursoServiceImp implements ICursoService{
         return (List<Curso>) cursoDao.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Curso findById(Long id) {
         return cursoDao.findById(id).orElse(null);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Curso> fetchCursosWithProfesor() {
         return cursoDao.fetchCursosWithProfesor();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Curso fetchCursoWithProfesorWithCalificacionesWithEstudiante(Long id) {
         return cursoDao.fetchCursoWithProfesorWithCalificacionesWithEstudiante(id);
