@@ -15,7 +15,7 @@ public class CursoController {
     @Autowired
     private ICursoService cursoService;
 
-    @GetMapping({ "", "/" })
+    @GetMapping({ "/" })
     public String index(Model model) {
         model.addAttribute("titulo", "Lista de cursos");
         model.addAttribute("cursos", cursoService.fetchCursosWithProfesor());
